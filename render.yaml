@@ -1,0 +1,20 @@
+# Render Blueprint: deploys the Express API from the backend/ folder.
+services:
+  - type: web
+    name: book-library-api
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false # paste your MongoDB Atlas connection string in the Render dashboard
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CLIENT_ORIGIN
+        sync: false # your Netlify URL, e.g. https://your-site.netlify.app
+      - key: ALLOW_FILE_FALLBACK
+        value: "false"
